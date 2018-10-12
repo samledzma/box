@@ -1,0 +1,104 @@
+import smbus
+import time
+import sys
+import threading
+import requests
+import json
+
+bus = smbus.SMBus(1)
+msgToStations = list()
+
+def writeNumber(adr,value):
+        bus.write_byte(adr, value)
+        return -1
+
+def readNumber(adr):
+        number = bus.read_byte(adr)
+        return number
+
+def enviar_server(data):
+    result = requests.post("http://192.168.100.40/bikecloud/receptor", data)
+    print(result.status_code, result.reason)
+    print(result.text)
+    try:
+        com_json = json.loads(result.text)
+        #print(com_json["commands"])
+        for com in com_json["commands"]:
+            print(com)
+            interprete(com)
+    except ValueError as e:
+        print (e)
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
+
+def interprete(com):
+    com = com.split("|")
+    print com
+    if com[0] == "OPEN":
+        print "Debe abrir..."
+        msgToStations.append(com[0])
+
+def comunicador():
+        i=1
+        t=""
+        while True:
+                if len(msgToStations) > 0:
+                        t=msgToStations.pop(0)
+                        escribir_estacion(1,t)
+                        print_there(1, 55, "                                                       ")
+                        print_there(1+5, 55, "-> "+t)
+                else:
+                        
+                        print_there(i, 55, "                                                       ")
+                        recibe_estacion = leer_estacion(i)
+                        print_there(i+5, 55, "<- "+recibe_estacion)
+                        if recibe_estacion != "":
+                            enviar_server(data={"mensaje":recibe_estacion})
+                        i+=1
+                        if i > 20:
+                                i=1
+                time.sleep(0.305)
+
+def leer_estacion(adr):
+        hadr=getHexAdr(adr)
+        try:
+                leer = 0
+                texto=""
+                while leer < 50:
+                        x = readNumber(hadr)
+                        if x == 10:
+                                break
+                        texto+=chr(x)
+                        leer+=1
+                return texto
+        except IOError as e:
+                #print e
+                return "ERROR|CONNECTION_PROBLEM|"+str(adr);
+
+def escribir_estacion(adr,message):
+        hadr=getHexAdr(adr)
+        try:
+                chars = []
+                for c in message:
+                        writeNumber(hadr,ord(c))
+                writeNumber(hadr,0)
+                #print "SEND >> ", message
+                return 0
+        except IOError as e:
+                #print e
+                return "ERROR|CONNECTION_PROBLEM|"+str(adr);
+
+def getHexAdr(adr):
+        return int('0x'+str(10+adr),0)
+
+def print_there(x, y, text):
+        sys.stdout.write("\x1b7\x1b[%d;%df%s\x1b8" % (x, y, text))
+        sys.stdout.flush()
+
+threads = list()
+t = threading.Thread(target=comunicador)
+threads.append(t)
+t.start()
+
+while True:
+        msgToStations.append(raw_input("SEND COMMAND: "))

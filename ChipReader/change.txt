@@ -1,0 +1,70 @@
+Detected: 10
+Card read UID: 81,115,81,29
+Setting tag
+Selecting UID [81, 115, 81, 29, 110]
+
+Authorizing
+Changing used auth key to [255, 255, 255, 255, 255, 255] using method A
+
+Writing modified bytes
+Calling card_auth on UID [81, 115, 81, 29, 110]
+Changing pos 2 with current value 0 to 105
+Changing pos 3 with current value 0 to 36
+Changing pos 4 with current value 0 to 64
+Writing [0, 0, 105, 36, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] to S1B0
+Not calling card_auth - already authed
+S1B0: [0, 0, 105, 36, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Calling card_auth on UID [81, 115, 81, 29, 110]
+Changing pos 0 with current value 0 to 18
+Changing pos 1 with current value 0 to 52
+Changing pos 2 with current value 0 to 86
+Changing pos 3 with current value 0 to 120
+Changing pos 4 with current value 0 to 150
+Changing pos 5 with current value 0 to 146
+Changing pos 6 with current value 255 to 15
+Changing pos 7 with current value 7 to 7
+Changing pos 8 with current value 128 to 143
+Changing pos 9 with current value 105 to 105
+Changing pos 10 with current value 255 to 116
+Changing pos 11 with current value 255 to 0
+Changing pos 12 with current value 255 to 82
+Changing pos 13 with current value 255 to 53
+Changing pos 14 with current value 255 to 0
+Changing pos 15 with current value 255 to 255
+Writing [18, 52, 86, 120, 150, 146, 15, 7, 143, 105, 116, 0, 82, 53, 0, 255] to S1B3
+Changing auth key and method to None
+Stopping crypto1
+
+Detected: 10
+Card read UID: 81,115,81,29
+Setting tag
+Selecting UID [81, 115, 81, 29, 110]
+Changing auth key and method to None
+
+Authorizing
+Changing used auth key to [255, 255, 255, 255, 255, 255] using method A
+
+Writing modified bytes
+Calling card_auth on UID [81, 115, 81, 29, 110]
+E2
+Not calling card_auth - already authed
+S1B0: []
+Calling card_auth on UID [81, 115, 81, 29, 110]
+Changing auth key and method to None
+
+Detected: 10
+Card read UID: 81,115,81,29
+Setting tag
+Selecting UID [81, 115, 81, 29, 110]
+Changing auth key and method to None
+
+Authorizing
+Changing used auth key to [255, 255, 255, 255, 255, 255] using method A
+
+Writing modified bytes
+Calling card_auth on UID [81, 115, 81, 29, 110]
+E2
+Not calling card_auth - already authed
+S1B0: []
+Calling card_auth on UID [81, 115, 81, 29, 110]
+Changing auth key and method to None
